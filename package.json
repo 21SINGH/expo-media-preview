@@ -1,0 +1,11 @@
+{
+  "name": "expo-media-preview",
+  "version": "1.0.0",
+  "description": "An react native package that offers you full media preview when you tap on it uses expo-image and expo-video under the hood ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sourav singh",
+  "license": "MIT"
+}
