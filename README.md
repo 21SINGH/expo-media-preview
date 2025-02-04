@@ -99,19 +99,14 @@ export default function App() {
 | `style` | `ImageStyle` \| `ViewStyle` | `undefined` | Style applied to the underlying thumbnail (width, height, etc.).  Use this to control the size and appearance of the preview area. |
 | `animationDuration` | `number` | `100` | Duration of the opening and closing animations (in milliseconds). |
 
-**Explanation of Types:**
+## Important Usage Notes for ExpoMediaPreview
 
-* **`ImageSourcePropType`:** This type represents the source of an image. It can be:
-    * An object with a `uri` property: `{ uri: 'https://example.com/image.jpg' }` (for remote images)
-    * A number: `require('./my-image.png')` (for local images)
-* **`ImageStyle`:** This type is used for styling images.  It's similar to `ViewStyle` but includes properties specific to images (e.g., `resizeMode`).
-* **`ViewStyle`:** This type is used for styling general views (like the container for the preview).  It includes properties like `width`, `height`, `backgroundColor`, etc.
+**Crucially, you must provide either `imgSrc` *or* `videoSrc`, but *never both simultaneously*.  Providing both `imgSrc` and `videoSrc` will lead to unpredictable behavior and potential malfunctions.**  The `ExpoMediaPreview` component intelligently determines whether to display an image or video preview based solely on which single source prop (`imgSrc` or `videoSrc`) is provided.
 
-**Key Points:**
+The `style` prop you supply will be applied to the underlying Image or Video component, as appropriate, depending on whether you've set `imgSrc` or `videoSrc`.
 
-* **`videoPlaceholderSrc` is crucial:**  Always use `videoPlaceholderSrc` when providing a `videoSrc`.  This provides a placeholder image while the video loads, significantly improving the user experience.
-* **Flexibility of `imgSrc` and `videoSrc`:** These props can accept either a URI string or an object with a `uri` property, giving you flexibility for different image/video sources.
-* **Styling:**  The `style` prop is essential for controlling the size and appearance of the preview.  Make sure to set `width` and `height` at a minimum.
-* **`animationDuration`:**  This prop allows you to customize the animation speed when the preview opens or closes.
+**Regarding Videos:**
 
+Providing a `videoPlaceholderSrc` is *strongly recommended* for all video previews.  When you include a `videoPlaceholderSrc`, the placeholder image will be rendered using `expo-image`, which generally offers superior image quality and caching compared to directly rendering a video frame.
 
+If you do *not* provide a `videoPlaceholderSrc`, the video will be rendered directly (initially without controls, muted, and paused). This default behavior is often not the desired user experience.  Therefore, it is best practice to *always* include a `videoPlaceholderSrc` when working with video previews.
