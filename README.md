@@ -13,7 +13,6 @@ A lightweight and customizable media (image/video/GIF) viewer that allows tappin
 - **Supports Images, GIFs,** and **Videos** out of the box.  
 - **Highly Customizable** – adjust styling and animation durations.
 
---
 
 ## Installation
 
