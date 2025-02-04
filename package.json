@@ -2,17 +2,19 @@
   "name": "expo-media-preview",
   "version": "1.0.1",
   "description": "A react native package that offers you full media preview when you tap on it uses expo-image and expo-video under the hood",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir lib --presets @babel/preset-env,@babel/preset-react"
-  },
+  "main": "src/index.tsx",
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "babel src --out-dir lib --extensions .tsx --presets @babel/preset-env,@babel/preset-react,@babel/preset-typescript"
+}
+,
   "author": "sourav singh",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.26.4",
     "@babel/preset-env": "^7.26.7",
     "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "react": "^18.2.0",
     "react-native": "^0.71.0"
   },
