@@ -38,7 +38,7 @@ expo install expo-image expo-video expo-blur
 
 ```
 
-<code style="color : name_color">Note: This library is only compatible with <strong>Expo 52 and above></code>
+<code style="color : name_color">Note: This library is only compatible with <strong>Expo 52 and above</code>
 
 
 # Quick Start
