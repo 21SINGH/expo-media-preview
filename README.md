@@ -38,7 +38,7 @@ expo install expo-image expo-video expo-blur
 
 ```
 
-# Quick Start
+## Quick Start
 
 - Install the package (and its peer dependencies).
 - Import and use <ExpoMediaPreview /> with either an image or a video source.
@@ -86,7 +86,7 @@ export default function App() {
 - expo-blur for background blurring during full-screen mode.
 
 
-## ExpoMediaPreview Component Props
+### ExpoMediaPreview Component Props
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
@@ -96,7 +96,7 @@ export default function App() {
 | `style` | `ImageStyle` \| `ViewStyle` | `undefined` | Style applied to the underlying thumbnail (width, height, etc.).  Use this to control the size and appearance of the preview area. |
 | `animationDuration` | `number` | `100` | Duration of the opening and closing animations (in milliseconds). |
 
-> ## ExpoMediaPreview Usage Notes
+### ExpoMediaPreview Usage Notes
 >
 > *   **`imgSrc` or `videoSrc` Required (Not Both):** Provide *either* `imgSrc` *or* `videoSrc`, but *never both*.  Using both will cause issues.
 > *   **Dynamic Styling:** The `style` prop applies to either the Image or Video component, depending on which source (`imgSrc` or `videoSrc`) you provide.
