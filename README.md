@@ -4,7 +4,6 @@ A lightweight and customizable media (image/video/GIF) viewer that allows tappin
 
 > Note: This library is only compatible with <strong>Expo 52 and above
 
---
 
 ## Features
 
