@@ -1,11 +1,6 @@
----
-title: "Expo Media Preview"
-description: "A lightweight and customizable media (image/video/GIF) viewer for Expo."
----
-
 # Expo Media Preview
 
-A lightweight and customizable media (image/video/GIF) viewer for [Expo](https://expo.dev) that allows tapping on a thumbnail to open a full-screen preview with **pinch to zoom**, **drag to dismiss**, and **cool animations**.
+A lightweight and customizable media (image/video/GIF) viewer that allows tapping on a thumbnail to open a full-screen preview with **pinch to zoom**, **drag to dismiss**, and **cool animations**.
 
 ---
 
