@@ -8,10 +8,10 @@ A lightweight and customizable media (image/video/GIF) viewer that allows tappin
 ## Features
 
 - Single Tap to open an image or video full-screen.  
-- **Pinch to Zoom** and **Drag to Pan** with smooth animations.  
-- **Drag to Dismiss** gesture when zoomed out.  
-- **Supports Images, GIFs,** and **Videos** out of the box.  
-- **Highly Customizable** – adjust styling and animation durations.
+- Pinch to Zoom and **Drag to Pan** with smooth animations.  
+- Drag to Dismiss gesture when zoomed out.  
+- Supports Images, GIFs, and Videos out of the box.  
+- Highly Customizable – adjust styling and animation durations.
 
 
 ## Installation
