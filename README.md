@@ -38,4 +38,4 @@ expo install expo-image expo-video expo-blur
 
 ```
 
-<span style="color:red;">**Note**: This library is only compatible with **Expo 52 and above**.</span>
+> Note**: This library is only compatible with **Expo 52 and above**.
