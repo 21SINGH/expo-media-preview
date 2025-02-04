@@ -83,7 +83,7 @@ export default function App() {
 ```
 
 ### Behind the Scenes
--- expo-image is used for efficient image loading and caching.
--- expo-video powers the video playback.
--- Pinch, Zoom, and Drag logic is handled via React Native’s PanResponder.
--- expo-blur for background blurring during full-screen mode.
+- expo-image is used for efficient image loading and caching.
+- expo-video powers the video playback.
+- Pinch, Zoom, and Drag logic is handled via React Native’s PanResponder.
+- expo-blur for background blurring during full-screen mode.
