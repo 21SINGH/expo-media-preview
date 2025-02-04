@@ -2,9 +2,7 @@
 
 A lightweight and customizable media (image/video/GIF) viewer that allows tapping on a thumbnail to open a full-screen preview with **pinch to zoom**, **drag to dismiss**, and **cool animations**.
 
-<div colour="#000">
 > Note: This library is only compatible with <strong>Expo 52 and above
-</div>
 
 
 ## Features
