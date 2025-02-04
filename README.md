@@ -37,3 +37,5 @@ yarn add expo-media-preview
 expo install expo-image expo-video expo-blur
 
 ```
+
+> **Note**: This library is only compatible with **Expo 52 and above**.
