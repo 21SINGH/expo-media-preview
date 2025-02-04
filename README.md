@@ -106,3 +106,15 @@ export default function App() {
 > Providing a `videoPlaceholderSrc` is *strongly recommended* for all video previews.  When you include a `videoPlaceholderSrc`, the placeholder image will be rendered using `expo-image`, which generally offers superior image quality and caching compared to directly rendering a video frame.
 >
 > If you do *not* provide a `videoPlaceholderSrc`, the video will be rendered directly (initially without controls, muted, and paused). This default behavior is often not the desired user experience.
+>
+
+
+<div align="center">
+
+Happy Building!
+
+Feel free to open an issue or submit PRs to help improve this package. If you find this helpful, don’t forget to give it a ⭐ on GitHub!
+
+Made with ❤️ and Expo
+
+</div>
