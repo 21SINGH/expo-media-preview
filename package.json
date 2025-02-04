@@ -1,6 +1,6 @@
 {
   "name": "expo-media-preview",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A react native package that offers you full media preview when you tap on it uses expo-image and expo-video under the hood",
   "main": "src/index.js",
   "scripts": {
