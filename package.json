@@ -1,10 +1,11 @@
 {
   "name": "expo-media-preview",
   "version": "1.0.0",
-  "description": "An react native package that offers you full media preview when you tap on it uses expo-image and expo-video under the hood ",
-  "main": "index.js",
+  "description": "A react native package that offers you full media preview when you tap on it uses expo-image and expo-video under the hood",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir lib --presets @babel/preset-env,@babel/preset-react"
   },
   "author": "sourav singh",
   "license": "MIT"
