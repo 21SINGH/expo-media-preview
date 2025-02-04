@@ -87,3 +87,31 @@ export default function App() {
 - expo-video powers the video playback.
 - Pinch, Zoom, and Drag logic is handled via React Native’s PanResponder.
 - expo-blur for background blurring during full-screen mode.
+
+
+## ExpoMediaPreview Component Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `imgSrc` | `ImageSourcePropType` (optional) | `undefined` | Image source (local or remote). If provided, this will show an image preview.  This prop can be an object with a `uri` property, or a number representing a local image (e.g., from `require('./my-image.png')`). |
+| `videoPlaceholderSrc` | `ImageSourcePropType` \| `string` (optional) | `undefined` | Image to show as a placeholder *while a video is loading*. This is highly recommended for a good user experience.  This can be a URI string or an `ImageSourcePropType` object. |
+| `videoSrc` | `string` \| `{ uri: string }` (optional) | `undefined` | Video URL or local video source. If provided without an `imgSrc`, this will load the video.  This prop should be a string representing the video URI, or an object with a `uri` property. |
+| `style` | `ImageStyle` \| `ViewStyle` | `undefined` | Style applied to the underlying thumbnail (width, height, etc.).  Use this to control the size and appearance of the preview area. |
+| `animationDuration` | `number` | `100` | Duration of the opening and closing animations (in milliseconds). |
+
+**Explanation of Types:**
+
+* **`ImageSourcePropType`:** This type represents the source of an image. It can be:
+    * An object with a `uri` property: `{ uri: 'https://example.com/image.jpg' }` (for remote images)
+    * A number: `require('./my-image.png')` (for local images)
+* **`ImageStyle`:** This type is used for styling images.  It's similar to `ViewStyle` but includes properties specific to images (e.g., `resizeMode`).
+* **`ViewStyle`:** This type is used for styling general views (like the container for the preview).  It includes properties like `width`, `height`, `backgroundColor`, etc.
+
+**Key Points:**
+
+* **`videoPlaceholderSrc` is crucial:**  Always use `videoPlaceholderSrc` when providing a `videoSrc`.  This provides a placeholder image while the video loads, significantly improving the user experience.
+* **Flexibility of `imgSrc` and `videoSrc`:** These props can accept either a URI string or an object with a `uri` property, giving you flexibility for different image/video sources.
+* **Styling:**  The `style` prop is essential for controlling the size and appearance of the preview.  Make sure to set `width` and `height` at a minimum.
+* **`animationDuration`:**  This prop allows you to customize the animation speed when the preview opens or closes.
+
+
