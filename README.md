@@ -99,12 +99,11 @@ export default function App() {
 | `style` | `ImageStyle` \| `ViewStyle` | `undefined` | Style applied to the underlying thumbnail (width, height, etc.).  Use this to control the size and appearance of the preview area. |
 | `animationDuration` | `number` | `100` | Duration of the opening and closing animations (in milliseconds). |
 
-## Important Usage Notes for ExpoMediaPreview
+## ExpoMediaPreview Usage Notes
 
-**Crucially, you must provide either `imgSrc` *or* `videoSrc`, but *never both simultaneously*.  Providing both `imgSrc` and `videoSrc` will lead to unpredictable behavior and potential malfunctions.**  The `ExpoMediaPreview` component intelligently determines whether to display an image or video preview based solely on which single source prop (`imgSrc` or `videoSrc`) is provided.
-
-The `style` prop you supply will be applied to the underlying Image or Video component, as appropriate, depending on whether you've set `imgSrc` or `videoSrc`.
-
+*   **`imgSrc` or `videoSrc` Required (Not Both):** Provide *either* `imgSrc` *or* `videoSrc`, but *never both*.  Using both will cause issues.
+*   **Dynamic Styling:** The `style` prop applies to either the Image or Video component, depending on which source (`imgSrc` or `videoSrc`) you provide.
+*   **Video Placeholder (Highly Recommended):** Always include `videoPlaceholderSrc` for videos.  This uses `expo-image` for better quality and caching. Without it, videos render initially muted, paused, and without controls.
 **Regarding Videos:**
 
 Providing a `videoPlaceholderSrc` is *strongly recommended* for all video previews.  When you include a `videoPlaceholderSrc`, the placeholder image will be rendered using `expo-image`, which generally offers superior image quality and caching compared to directly rendering a video frame.
