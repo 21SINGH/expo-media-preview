@@ -1,6 +1,9 @@
+import { ImageSourcePropType, ImageStyle } from "react-native";
+
 export interface ExpoMediaPreviewProps {
-    imgSrc?: string;
+   readonly imgSrc? : ImageSourcePropType;
     videoSrc?: string;
-    styles?: object;
+    readonly style?: ImageStyle
+    readonly animationDuration?: number;
   }
   
