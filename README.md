@@ -20,3 +20,8 @@ A lightweight and customizable media (image/video/GIF) viewer that allows tappin
 
 ```bash
 npm install expo-media-preview
+
+**Using yarn:**
+
+```bash
+yarn add expo-media-preview
