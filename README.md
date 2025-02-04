@@ -29,3 +29,11 @@ npm install expo-media-preview
 yarn add expo-media-preview
 
 ```
+
+**Additionally, install required peer dependencies:**
+
+```bash
+
+expo install expo-image expo-video expo-blur
+
+```
