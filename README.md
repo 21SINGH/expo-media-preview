@@ -41,6 +41,12 @@ expo install expo-image expo-video expo-blur
 > Note: This library is only compatible with <strong>Expo 52 and above
 
 
+#Quick Start
+
+-Install the package (and its peer dependencies).
+-Import and use <ExpoMediaPreview /> with either an image or a video source.
+
+
 ```javascript
 import React from 'react';
 import { View } from 'react-native';
@@ -48,11 +54,11 @@ import ExpoMediaPreview from 'expo-media-preview';
 
 export default function App() {
   const sampleImage = {
-    uri: '[https://placekitten.com/800/400](https://placekitten.com/800/400)', // Replace with your image URL
+    uri: 'https://path-to-your-img-file.jpg', // Replace with your image URL
   };
 
   const sampleVideo = {
-    uri: '[https://path-to-your-video-file.mp4](https://path-to-your-video-file.mp4)', // Replace with your video URL
+    uri: 'https://path-to-your-video-file.mp4', // Replace with your video URL
   };
 
   return (
@@ -66,9 +72,18 @@ export default function App() {
       {/* Usage with a video */}
       <ExpoMediaPreview
         videoSrc={sampleVideo}
-        videoPlaceholderSrc={{ uri: '[https://placekitten.com/800/400](https://placekitten.com/800/400)' }}
+        videoPlaceholderSrc={{ uri: 'https://path-to-your-placeholder-image.jpg' }}
         style={{ width: 150, height: 150, marginTop: 20 }}
       />
     </View>
   );
 }
+
+
+```
+
+### Behind the Scenes
+--expo-image is used for efficient image loading and caching.
+--expo-video powers the video playback.
+--Pinch, Zoom, and Drag logic is handled via React Native’s PanResponder.
+--expo-blur for background blurring during full-screen mode.
