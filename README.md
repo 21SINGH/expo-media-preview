@@ -90,9 +90,9 @@ export default function App() {
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `imgSrc` | `ImageSourcePropType` (optional) | `undefined` | Image source (local or remote). If provided, this will show an image preview.  This prop can be an object with a `uri` property, or a number representing a local image (e.g., from `require('./my-image.png')`). |
-| `videoPlaceholderSrc` | `ImageSourcePropType` \| `string` (optional) | `undefined` | Image to show as a placeholder *while a video is loading*. This is highly recommended for a good user experience.  This can be a URI string or an `ImageSourcePropType` object. |
-| `videoSrc` | `string` \| `{ uri: string }` (optional) | `undefined` | Video URL or local video source. If provided without an `imgSrc`, this will load the video.  This prop should be a string representing the video URI, or an object with a `uri` property. |
+| `imgSrc` | `ImageSourcePropType` (optional) | `undefined` | If provided, this will show an image preview.  This prop can be an object with a `uri` property, or a number representing a local image (e.g., from `require('./my-image.png')`). |
+| `videoPlaceholderSrc` | `ImageSourcePropType` \| `string` (optional) | `undefined` | Image to show as a placeholder *in small view*. This is highly recommended for a good user experience.  This can be a URI string or an `ImageSourcePropType` object. |
+| `videoSrc` | `string` \| `{ uri: string }` (optional) | `undefined` | Video URL or local video source.|
 | `style` | `ImageStyle` \| `ViewStyle` | `undefined` | Style applied to the underlying thumbnail (width, height, etc.).  Use this to control the size and appearance of the preview area. |
 | `animationDuration` | `number` | `100` | Duration of the opening and closing animations (in milliseconds). |
 
