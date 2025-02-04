@@ -3,8 +3,8 @@ import { View, StyleSheet, Animated, ImageStyle } from "react-native";
 import { ExpoMediaPreviewProps } from "./types";
 import { useOriginImageLayout } from "./utils/useOriginImageLayout";
 import { Image as ExpoImage } from "expo-image";
-import MainImage from "./components/MainImage";
-import ImageDetailsComponent from "./components/ImageDetailsComponent";
+import MainMedia from "./components/MainMedia";
+import MediaDetailsComponent from "./components/MediaDetailsComponent";
 
 const VISIBLE_OPACITY = 1;
 const INVISIBLE_OPACITY = 0;
@@ -16,6 +16,7 @@ interface ImageDetail {
 const ExpoMediaPreview: React.FC<ExpoMediaPreviewProps> = ({
   imgSrc,
   videoSrc,
+  videoPlaceholderSrc,
   style,
   animationDuration = 100,
 }) => {
@@ -64,16 +65,19 @@ const ExpoMediaPreview: React.FC<ExpoMediaPreviewProps> = ({
   };
 
   return (
-   <View ref={mediaRef} style={{ flex: 1,}}>
-      <MainImage
-        source={imgSrc}
+    <View ref={mediaRef} style={{ flex: 1 }}>
+      <MainMedia
+        imgSrc={imgSrc}
+        videoSrc={videoSrc}
+        videoPlaceholderSrc={videoPlaceholderSrc}
         imageOpacity={originImageOpacity}
         onDialogOpen={handleOpen}
         style={style}
       />
       {isModalOpen && (
-        <ImageDetailsComponent
-          source={imgSrc}
+        <MediaDetailsComponent
+          imgSrc={imgSrc}
+          videoSrc={videoSrc}
           isVideo={false}
           ref={imageDetailRef}
           isOpen={isModalOpen}
@@ -82,7 +86,6 @@ const ExpoMediaPreview: React.FC<ExpoMediaPreviewProps> = ({
           onClose={handleClose}
         />
       )}
-     
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import type { RefObject } from "react";
 import {
   Animated,
@@ -8,10 +8,10 @@ import {
   GestureResponderEvent,
   PanResponderGestureState,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { Image as ExpoImage } from "expo-image";
 
-// Utility functions to calculate pinch/zoom, swipe distances, etc.
 import {
   getCenterPositionBetweenTouches,
   getDistanceBetweenTouches,
@@ -23,24 +23,19 @@ import {
   getZoomAndPositionFromDoubleTap,
   getZoomFromDistance,
   VISIBLE_OPACITY,
-} from "./utils";
+} from "../utils/gesture";
 
-import type { ImageSourcePropType } from "react-native";
-// import { ResizeMode, Video } from "expo-av";
+import { useVideoPlayer, VideoView } from "expo-video";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useEvent } from "expo";
 
-/**
- * Constants used to control zoom, swipe, tap time intervals, etc.
- */
 const INITIAL_SCALE = 1;
 const LONG_PRESS_TIME = 800;
-const DOUBLE_CLICK_INTERVAL = 250; // Max gap between two taps to register as double-click
-const CLICK_DISTANCE = 10; // Max movement to still consider an action as a "click"
+const DOUBLE_CLICK_INTERVAL = 250;
+const CLICK_DISTANCE = 10;
 const DRAG_DISMISS_THRESHOLD = 150;
 const INITIAL_ZOOM_DISTANCE = -1;
 
-/**
- * Basic React Native styles for the image container.
- */
 const styles = StyleSheet.create({
   image: {
     width: "100%",
@@ -48,25 +43,12 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * ImageArea
- *
- * This component manages complex image gestures like:
- * - Pinch-to-zoom
- * - Double-tap to zoom in/out
- * - Panning around the zoomed image
- * - Swiping down or up to dismiss (if `swipeToDismiss` is true)
- *
- * Animated values from the parent (`ImageDetailsComponent`) are used to control
- * the image's position, size, and opacity. We also store internal states and
- * references (_scale, _position, etc.) to track gestures between re-renders.
- */
 interface Props {
   readonly renderToHardwareTextureAndroid: boolean;
-  readonly isVideo: boolean;
   readonly windowWidth: number;
   readonly windowHeight: number;
-  readonly source;
+  readonly imgSrc;
+  readonly videoSrc;
   readonly swipeToDismiss: boolean;
   readonly isAnimated: RefObject<boolean>;
   readonly animationDuration: number;
@@ -80,12 +62,12 @@ interface Props {
   onClose(): void;
 }
 
-const ImageArea: React.FC<Props> = ({
+const MediaArea: React.FC<Props> = ({
   renderToHardwareTextureAndroid,
-  isVideo,
+  videoSrc,
   windowWidth,
   windowHeight,
-  source,
+  imgSrc,
   swipeToDismiss,
   isAnimated,
   animationDuration,
@@ -98,11 +80,9 @@ const ImageArea: React.FC<Props> = ({
   isModalOpen,
   onClose,
 }: Props) => {
-  /**
-   * Internal Refs
-   * Store data about the current zoom level, image offset, touch positions, etc.
-   * These remain stable between re-renders of the component.
-   */
+  const insets = useSafeAreaInsets();
+  const [playerStatus, setPlayerStatus] = useState();
+
   const _scale = useRef(INITIAL_SCALE);
   const _position = useRef({ x: 0, y: 0 });
   const _lastPosition = useRef({ x: 0, y: 0 });
@@ -110,16 +90,12 @@ const ImageArea: React.FC<Props> = ({
   const _zoomCurrentDistance = useRef(INITIAL_ZOOM_DISTANCE);
   const _zoomLastDistance = useRef(INITIAL_ZOOM_DISTANCE);
 
-  // For handling single/double click and long press.
   const _lastClickTime = useRef(0);
   const _isDoubleClick = useRef(false);
   const _isLongPress = useRef(false);
   const _singleTapTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
   const _longPressTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  /**
-   * Utility to clear any pending long press timeouts.
-   */
   const clearLongPressTimeout = () => {
     if (_longPressTimeout.current) {
       clearTimeout(_longPressTimeout.current);
@@ -127,9 +103,6 @@ const ImageArea: React.FC<Props> = ({
     }
   };
 
-  /**
-   * Utility to clear any single-tap timeouts (used for distinguishing single taps from double taps).
-   */
   const clearSingleTapTimeout = () => {
     if (_singleTapTimeout.current) {
       clearTimeout(_singleTapTimeout.current);
@@ -137,10 +110,6 @@ const ImageArea: React.FC<Props> = ({
     }
   };
 
-  /**
-   * Updates the image’s position during a standard pan gesture (single touch).
-   * Also adjusts background opacity if swipe-to-dismiss is enabled.
-   */
   const moveImageToGesture = (gestureState: PanResponderGestureState) => {
     clearLongPressTimeout();
     const { dx, dy } = gestureState;
@@ -148,7 +117,6 @@ const ImageArea: React.FC<Props> = ({
       dx,
       dy,
     });
-    // Keep track of cumulative movement.
     _lastPosition.current = { x: dx, y: dy };
 
     const scale = _scale.current;
@@ -160,7 +128,6 @@ const ImageArea: React.FC<Props> = ({
     );
     animatedPosition.setValue(_position.current);
 
-    // If swiping to dismiss, fade out the background as user drags up/down.
     const opacity = getOpacityFromSwipe({
       swipeToDismiss,
       scale,
@@ -170,10 +137,6 @@ const ImageArea: React.FC<Props> = ({
     animatedOpacity.setValue(opacity);
   };
 
-  /**
-   * Handles pinch-to-zoom gestures (two touches).
-   * We measure the distance between touches, update the scale, and adjust the image position.
-   */
   const pinchZoom = (event: GestureResponderEvent) => {
     clearLongPressTimeout();
 
@@ -183,17 +146,13 @@ const ImageArea: React.FC<Props> = ({
       event.nativeEvent.changedTouches[1]
     );
 
-    // If we already have a recorded distance, calculate the delta and update the zoom.
     if (_zoomLastDistance.current !== INITIAL_ZOOM_DISTANCE) {
       const distanceDiff =
         (_zoomCurrentDistance.current - _zoomLastDistance.current) / 200;
       const zoom = getZoomFromDistance(_scale.current, distanceDiff);
 
-      // Update the global `_scale` ref and the Animated scale value.
       _scale.current = zoom;
       animatedScale.setValue(_scale.current);
-
-      // Calculate the new offset based on pinch location.
       _position.current = getPositionFromDistanceInScale({
         currentPosition: _position.current,
         centerDiff: _centerPosition.current,
@@ -205,9 +164,6 @@ const ImageArea: React.FC<Props> = ({
     _zoomLastDistance.current = _zoomCurrentDistance.current;
   };
 
-  /**
-   * Animate the image to a specified position.
-   */
   const animateToPosition = (position: { x: number; y: number }) => {
     _position.current = position;
     Animated.timing(animatedPosition, {
@@ -217,9 +173,6 @@ const ImageArea: React.FC<Props> = ({
     }).start();
   };
 
-  /**
-   * Animate to a specified scale factor.
-   */
   const animateToScale = (scale: number) => {
     _scale.current = scale;
     Animated.timing(animatedScale, {
@@ -229,10 +182,6 @@ const ImageArea: React.FC<Props> = ({
     }).start();
   };
 
-  /**
-   * Handles logic upon releasing the pan gesture. Determines
-   * whether to reset position/scale, dismiss modal, etc.
-   */
   const handlePanResponderReleaseResolve = (
     // eslint-disable-next-line prettier/prettier
     changedTouchesCount: number
@@ -272,10 +221,6 @@ const ImageArea: React.FC<Props> = ({
     }).start();
   };
 
-  /**
-   * Called when a gesture starts (finger touches down).
-   * We reset stored positions, prepare for pinch or double-tap, etc.
-   */
   const handlePanResponderGrant = (event: GestureResponderEvent) => {
     // If another animation is in progress, ignore gestures.
     if (isAnimated.current) return;
@@ -325,10 +270,6 @@ const ImageArea: React.FC<Props> = ({
     }
   };
 
-  /**
-   * Called when the user moves their finger. We either move/drag (single touch)
-   * or pinch-zoom (multiple touches).
-   */
   const handlePanResponderMove = (
     event: GestureResponderEvent,
     // eslint-disable-next-line prettier/prettier
@@ -345,10 +286,6 @@ const ImageArea: React.FC<Props> = ({
     }
   };
 
-  /**
-   * Called when the user lifts their finger off the screen.
-   * We determine whether to reset, dismiss, or do nothing further.
-   */
   const handlePanResponderRelease = (
     event: GestureResponderEvent,
     // eslint-disable-next-line prettier/prettier
@@ -379,10 +316,6 @@ const ImageArea: React.FC<Props> = ({
     }
   };
 
-  /**
-   * Create the PanResponder with all relevant callbacks to handle
-   * various gestures.
-   */
   const _imagePanResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderTerminationRequest: () => false,
@@ -391,15 +324,19 @@ const ImageArea: React.FC<Props> = ({
     onPanResponderRelease: handlePanResponderRelease,
   });
 
+  const player = useVideoPlayer(videoSrc, (player) => {
+    player.play();
+  });
+
+  const { status, error } = useEvent(player, "statusChange", {
+    status: player.status,
+  });
+
   return (
     <View
       style={{ overflow: "hidden", flex: 1 }}
       {..._imagePanResponder.panHandlers}
     >
-      {/* 
-        Animated container that transforms based on pinch, pan, and zoom gestures.
-        We move/scale this container to implement all the gesture-based transformations.
-      */}
       <Animated.View
         style={{
           transform: [
@@ -420,32 +357,30 @@ const ImageArea: React.FC<Props> = ({
           top: animatedImagePosition.y,
           width: animatedImageWidth,
           height: animatedImageHeight,
+          paddingVertical: insets.top,
+          alignItems: "center",
+          justifyContent: "center",
         }}
         // renderToHardwareTextureAndroid={true}
       >
-        {/*
-          The actual image, using expo-image for potential performance and caching benefits.
-          `contentFit="contain"` ensures we respect the image’s aspect ratio within its container.
-        */}
-        {!isVideo ? (
+        {!videoSrc ? (
           <ExpoImage
-            style={styles.image}
-            source={source}
+            style={[styles.image]}
+            source={imgSrc}
             contentFit="contain"
           />
+        ) : status === "loading" ? (
+          <ActivityIndicator />
         ) : (
-          <></>
-          // <Video
-          //   source={{ uri: source }}
-          //   style={styles.image}
-          //   shouldPlay={true}
-          //   isLooping={true}
-          //   resizeMode={ResizeMode.CONTAIN}
-          // />
+          <VideoView
+            style={[styles.image]}
+            player={player}
+            nativeControls={true}
+          />
         )}
       </Animated.View>
     </View>
   );
 };
 
-export default ImageArea;
+export default MediaArea;

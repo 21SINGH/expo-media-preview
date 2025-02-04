@@ -6,24 +6,10 @@ import React, {
 } from "react";
 import { Modal, Dimensions, Animated, ImageSourcePropType } from "react-native";
 import Background from "./Background";
-import DisplayImageArea from "./DisplayImageArea";
-import { Header } from "./Header";
-import ImageArea from "./ImageArea/ImageArea";
+import MediaArea from "./MediaArea";
+import DisplayMediaArea from "./DisplayMediaArea";
 
 
-/**
- * A component that animates an image transition into a full-screen modal.
- * It uses React’s `forwardRef` and `useImperativeHandle` to expose a `close` method
- * so the parent component can programmatically close the modal.
- *
- * Key Points:
- * - Listens for `isOpen` to determine when to show or hide the modal.
- * - Performs parallel animations when opening or closing the modal, making the transition smooth.
- * - Uses multiple Animated.Value objects for position, size, and opacity,
- *   allowing fine-grained control over how the image transitions to full screen.
- * - Includes a header area with a close button (`Header`), a background overlay (`Background`),
- *   and the main image content area (`ImageArea`).
- */
 
 const INITIAL_SCALE = 1;
 
@@ -31,7 +17,9 @@ interface Props {
   /**
    * The image source (could be a local or remote resource).
    */
-  source: ImageSourcePropType;
+  imgSrc?: ImageSourcePropType;
+
+  videoSrc?;
   /**
    * Flag indicating if the modal is currently open.
    */
@@ -57,9 +45,9 @@ interface Props {
   onClose(): void;
 }
 
-const ImageDetailsComponent = forwardRef<any, Props>(
-  function ImageDetailsComponent(
-    { source, isVideo, isOpen, origin, animationDuration, onClose }: Props,
+const MediaDetailsComponent = forwardRef<any, Props>(
+  function MediaDetailsComponent(
+    { imgSrc,videoSrc, isVideo, isOpen, origin, animationDuration, onClose }: Props,
     // eslint-disable-next-line prettier/prettier
     ref
   ) {
@@ -219,10 +207,10 @@ const ImageDetailsComponent = forwardRef<any, Props>(
         <Background animatedOpacity={animatedOpacity} />
 
         {/* Display container area - animates the image area into view */}
-        <DisplayImageArea animatedFrame={animatedFrame}>
+        <DisplayMediaArea animatedFrame={animatedFrame}>
           {/* The core image area, controlling gestures and the full view of the image */}
-          <ImageArea
-            isVideo={isVideo}
+          <MediaArea
+            videoSrc={videoSrc}
             renderToHardwareTextureAndroid={true}
             isAnimated={isAnimated}
             animatedOpacity={animatedOpacity}
@@ -234,19 +222,16 @@ const ImageDetailsComponent = forwardRef<any, Props>(
             windowWidth={windowWidth}
             windowHeight={windowHeight}
             swipeToDismiss={true}
-            source={source}
+            imgSrc={imgSrc}
             animationDuration={animationDuration}
             isModalOpen={isOpen}
             onClose={handleClose}
           />
-        </DisplayImageArea>
-
-        {/* Top header bar with a close button */}
-        <Header animatedOpacity={animatedOpacity} onClose={handleClose} />
+        </DisplayMediaArea>
       </Modal>
     );
     // eslint-disable-next-line prettier/prettier
   }
 );
 
-export default ImageDetailsComponent;
+export default MediaDetailsComponent;

@@ -15,11 +15,12 @@
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "expo-blur": "^14.0.3",
+    "expo-video": "^2.0.5",
     "react": "^18.2.0",
-    "react-native": "^0.71.0"
+    "react-native": "^0.71.0",
+    "react-native-safe-area-context": "^5.2.0"
   },
   "dependencies": {
-    "expo-image": "^2.0.4",
-    "expo-video": "^2.0.5"
+    "expo-image": "^2.0.4"
   }
 }
