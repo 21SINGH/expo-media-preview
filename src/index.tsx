@@ -1,15 +1,15 @@
 import React from 'react'
-import type { ReactNode, RefObject } from 'react'
+import type { RefObject } from 'react'
 import { createRef, forwardRef, useImperativeHandle, useRef, useState } from 'react'
 
 import { Animated, View } from 'react-native'
 
-import { ImageDetailComponent, OriginImage } from './components'
+import { MediaDetailComponent, OriginMedia } from './components'
 import { useOriginImageLayout } from './hooks'
 
 import type { ImageDetail } from './components'
-import type { OnMove, OnTap, RenderImageComponentParams } from './types'
-import type { ImageResizeMode, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native'
+import type { OnMove, OnTap} from './types'
+import type {  ImageSourcePropType, ImageStyle, StyleProp } from 'react-native'
 
 const VISIBLE_OPACITY = 1
 const INVISIBLE_OPACITY = 0
@@ -22,26 +22,17 @@ interface ReactNativeImageModal {
 
 /**
  * @typedef {object} Props
- * @property {ImageSourcePropType} source - Image source.
+ *  * @property {ImageSourcePropType} videoPlaceholder - Image source.
  * @property {StyleProp<ImageStyle>} [style] - Style for original image.
- * @property {ImageResizeMode} [resizeMode=contain] - Resize mode for original image.
  * @property {boolean} [isRTL=false] - Support for right-to-left layout.
  * @property {boolean} [renderToHardwareTextureAndroid=true] - (Android only) Use hardware texture for animation.
- * @property {boolean} [isTranslucent=false] - Determines whether image modal should go under the system statusbar.
  * @property {boolean} [swipeToDismiss=true] - Dismiss image modal by swiping up or down.
  * @property {boolean} [imageBackgroundColor=transparent] - Background color for original image.
- * @property {boolean} [overlayBackgroundColor=#000000] - Background color for modal image.
- * @property {boolean} [hideCloseButton=false] - Hide close button.
  * @property {boolean} modalRef - Deprecated: Ref for image modal. Use ref instead.
  * @property {boolean} [disabled=false] - Disable opening image modal.
  * @property {boolean} [modalImageStyle] - Style for modal image.
- * @property {boolean} [modalImageResizeMode=contain] - Resize mode for modal image.
  * @property {boolean} [parentLayout] - Parent component layout of ImageModal to limit displayed image modal area when closing image modal.
  * @property {number} [animationDuration=100] - Duration of animation.
- * @property {(close: () => void) => ReactNode} [renderHeader] - Render custom header component. You can close image modal by calling close function.
- * @property {(close: () => void) => ReactNode} [renderFooter] - Render custom footer component. You can close image modal by calling close function.
- * @property {(params: { source: ImageSourcePropType, style?: StyleProp<ImageStyle>, resizeMode?: ImageResizeMode }) => ReactNode} [renderImageComponent] - Render custom image component like expo-image or react-native-fast-image.
- * @property {() => void} [onLongPressOriginImage] - Callback when long press on original image.
  * @property {(eventParams: OnTap) => void} [onTap] - Callback when tap on modal image.
  * @property {() => void} [onDoubleTap] - Callback when double tap on modal image.
  * @property {() => void} [onLongPress] - Callback when long press on modal image.
@@ -56,16 +47,19 @@ interface Props {
   /**
    *  Image source.
    */
-  readonly source: ImageSourcePropType
+  readonly source;
+   /**
+   *  Video Placeholder source.
+   */
+   readonly videoPlaceholder?: ImageSourcePropType
+  /**
+   *  is video.
+   */
+  readonly isVideo?: boolean
   /**
    *  Style for original image.
    */
   readonly style?: StyleProp<ImageStyle>
-  /**
-   *  Resize mode for original image.
-   *  @default 'contain'
-   */
-  readonly resizeMode?: ImageResizeMode
   /**
    *  Support for right-to-left layout.
    *  @default false
@@ -77,11 +71,6 @@ interface Props {
    */
   readonly renderToHardwareTextureAndroid?: boolean
   /**
-   *  Determines whether image modal should go under the system statusbar.
-   *  @default false
-   */
-  readonly isTranslucent?: boolean
-  /**
    *  Dismiss image modal by swiping up or down.
    *  @default true
    */
@@ -91,16 +80,6 @@ interface Props {
    *  @default 'transparent'
    */
   readonly imageBackgroundColor?: string
-  /**
-   *  Background color for modal image.
-   *  @default '#000000'
-   */
-  readonly overlayBackgroundColor?: string
-  /**
-   *  Hide close button.
-   *  @default false
-   */
-  readonly hideCloseButton?: boolean
   /**
    * @deprecated This prop is deprecated and will be removed in future releases. Use `ref` instead.
    */
@@ -115,11 +94,6 @@ interface Props {
    */
   readonly modalImageStyle?: ImageStyle
   /**
-   *  Resize mode for modal image.
-   *  @default 'contain'
-   */
-  readonly modalImageResizeMode?: ImageResizeMode
-  /**
    *  Parent component layout of ImageModal to limit displayed image modal area when closing image modal.
    */
   readonly parentLayout?: {
@@ -130,25 +104,9 @@ interface Props {
   }
   /**
    *  Duration of animation.
-   *  @default 100
+   *  @default 150
    */
   readonly animationDuration?: number
-  /**
-   *  Render custom header component. You can close image modal by calling close function.
-   */
-  renderHeader?(close: () => void): ReactNode
-  /**
-   *  Render custom footer component. You can close image modal by calling close function.
-   */
-  renderFooter?(close: () => void): ReactNode
-  /**
-   *  Render custom image component like expo-image or react-native-fast-image.
-   */
-  renderImageComponent?(params: RenderImageComponentParams): ReactNode
-  /**
-   *  Callback when long press on original image.
-   */
-  onLongPressOriginImage?(): void
   /**
    *  Callback when tap on modal image.
    */
@@ -192,27 +150,20 @@ interface Props {
  * @param {Props} props - Props of ImageModal component
  * @returns {ReactNode} Image modal component
  */
-const ImageModal = forwardRef<ReactNativeImageModal, Props>(function ImageModal(
+const ExpoMediaPreview = forwardRef<ReactNativeImageModal, Props>(function ExpoMediaPreview(
   {
     source,
+    videoPlaceholder,
     style,
-    resizeMode = 'contain',
+    isVideo = false,
     isRTL = false,
-    isTranslucent,
     swipeToDismiss = true,
     imageBackgroundColor = 'transparent',
-    overlayBackgroundColor,
-    hideCloseButton,
     modalRef,
     disabled = false,
     modalImageStyle,
-    modalImageResizeMode,
     parentLayout,
-    animationDuration = 100,
-    onLongPressOriginImage,
-    renderHeader,
-    renderFooter,
-    renderImageComponent,
+    animationDuration = 150,
     onTap,
     onDoubleTap,
     onLongPress,
@@ -271,38 +222,30 @@ const ImageModal = forwardRef<ReactNativeImageModal, Props>(function ImageModal(
     close() {
       imageDetailRef.current!.close()
     },
-  }))
+  }))  
 
   return (
     <View ref={imageRef} style={[{ alignSelf: 'baseline', backgroundColor: imageBackgroundColor }]}>
-      <OriginImage
+      <OriginMedia
         source={source}
-        resizeMode={resizeMode}
+        isVideo={isVideo}
+        videoPlaceholder={videoPlaceholder}
         imageOpacity={originImageOpacity}
         disabled={disabled}
         style={style}
-        isModalOpen={isModalOpen}
         onDialogOpen={handleOpen}
-        onLongPressOriginImage={onLongPressOriginImage}
-        renderImageComponent={renderImageComponent}
       />
       {isModalOpen && (
-        <ImageDetailComponent
+        <MediaDetailComponent
           source={source}
-          resizeMode={modalImageResizeMode ?? resizeMode}
+          isVideo={isVideo}
           imageStyle={modalImageStyle}
           ref={modalRef ?? imageDetailRef}
           isOpen={isModalOpen}
-          isTranslucent={isTranslucent}
           origin={originImageLayout}
-          backgroundColor={overlayBackgroundColor}
           swipeToDismiss={swipeToDismiss}
-          hideCloseButton={hideCloseButton}
           parentLayout={parentLayout}
           animationDuration={animationDuration}
-          renderHeader={renderHeader}
-          renderFooter={renderFooter}
-          renderImageComponent={renderImageComponent}
           onTap={onTap}
           onDoubleTap={onDoubleTap}
           onLongPress={onLongPress}
@@ -317,5 +260,5 @@ const ImageModal = forwardRef<ReactNativeImageModal, Props>(function ImageModal(
   )
 })
 
-export default ImageModal
+export default ExpoMediaPreview
 export type { ReactNativeImageModal, ImageDetail }

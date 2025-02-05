@@ -1,2 +1,2 @@
-export * from './ImageDetail'
-export * from './OriginImage'
+export * from './MediaDetail'
+export * from './OriginMedia'
