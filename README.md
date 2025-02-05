@@ -13,11 +13,10 @@ You can pinch zoom-in/out, double-tap zoom-in/out, move and swipe-to-dismiss.
 
 ## Features
 
-- Single Tap to open an image or video full-screen.  
-- Pinch to Zoom and **Drag to Pan** with smooth animations.  
-- Drag to Dismiss gesture when zoomed out.  
+- Single Tap to open an media full-screen.  
+- Pinch to Zoom.  
+- Drag to Dismiss.  
 - Supports Images, GIFs, and Videos out of the box.  
-- Highly Customizable – adjust styling and animation durations.
 
 
 ## Installation
