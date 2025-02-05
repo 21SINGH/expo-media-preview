@@ -46,9 +46,10 @@ expo install expo-image expo-video expo-blur
 ## Demo
 
 <video width="200" height="200" controls>
-  <source src={require("./assets/ios.mp4")} type="video/mp4" />
+  <source src="[YOUR_PUBLIC_VIDEO_UR](https://github.com/21SINGH/expo-media-preview/blob/main/assets/ios.mp4)" type="video/mp4">
   Your browser does not support the video tag.
 </video>
+
 
 ## Quick Start
 
