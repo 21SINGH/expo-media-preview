@@ -99,14 +99,30 @@ export default function App() {
 
 ### ExpoMediaPreview Component Props
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `imgSrc` | `ImageSourcePropType` (optional) | `undefined` | If provided, this will show an image preview.  This prop can be an object with a `uri` property, or a number representing a local image (e.g., from `require('./my-image.png')`). |
-| `videoPlaceholderSrc` | `ImageSourcePropType` \| `string` (optional) | `undefined` | Image to show as a placeholder *in small view*. This is highly recommended for a good user experience.  This can be a URI string or an `ImageSourcePropType` object. |
-| `videoSrc` | `string` \| `{ uri: string }` (optional) | `undefined` | Video URL or local video source.|
-| `style` | `ImageStyle` \| `ViewStyle` | `undefined` | Style applied to the underlying thumbnail (width, height, etc.).  Use this to control the size and appearance of the preview area. |
-| `animationDuration` | `number` | `100` | Duration of the opening and closing animations (in milliseconds). |
-
+| Prop | Type | Description |
+|---|---|---|
+| `source` | `ImageSourcePropType` | Image source for the modal |
+| `videoPlaceholder` | `ImageSourcePropType` | Image source for video placeholder |
+| `isVideo` | `boolean` | Determines if the source is a video |
+| `style` | `StyleProp<ImageStyle>` | Style for the original image |
+| `isRTL` | `boolean` | Support for right-to-left layout |
+| `renderToHardwareTextureAndroid` | `boolean` | Use hardware texture for animation (Android) |
+| `swipeToDismiss` | `boolean` | Enable swipe to dismiss functionality |
+| `imageBackgroundColor` | `string` | Background color for original image |
+| `modalRef` | `RefObject<ImageDetail>` | Deprecated ref for image modal |
+| `disabled` | `boolean` | Disable opening image modal |
+| `modalImageStyle` | `ImageStyle` | Style for modal image |
+| `parentLayout` | `{ x: number, y: number, width: number, height: number }` | Parent component layout for modal |
+| `animationDuration` | `number` | Duration of animation |
+| `onTap` | `(eventParams: OnTap) => void` | Callback when image is tapped |
+| `onDoubleTap` | `() => void` | Callback when image is double tapped |
+| `onLongPress` | `() => void` | Callback when image is long pressed |
+| `onOpen` | `() => void` | Callback when image modal is opening |
+| `didOpen` | `() => void` | Callback when image modal is opened |
+| `onMove` | `(position: OnMove) => void` | Callback when modal image is moving |
+| `responderRelease` | `(vx: number, scale: number) => void` | Callback when touch is released |
+| `willClose` | `() => void` | Callback when image modal is closing |
+| `onClose` | `() => void` | Callback when image modal is closed |
 ### ExpoMediaPreview Usage Notes
 >
 > *   **`imgSrc` or `videoSrc` Required (Not Both):** Provide *either* `imgSrc` *or* `videoSrc`, but *never both*.  Using both will cause issues.
