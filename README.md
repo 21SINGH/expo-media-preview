@@ -115,7 +115,6 @@ export default function App() {
 | `isVideo` | `boolean` | Determines if the source is a video default false |
 | `style` | `StyleProp` | Style for the original Media |
 | `swipeToDismiss` | `boolean` | Enable swipe to dismiss functionality |
-| `modalRef` | `RefObject<>` | Deprecated ref for image modal |
 | `disabled` | `boolean` | Disable opening image modal |
 | `parentLayout` | `{ x: number, y: number, width: number, height: number }` | Parent component layout for modal |
 | `animationDuration` | `number` | Duration of animation default 150 |
