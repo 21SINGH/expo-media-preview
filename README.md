@@ -1,6 +1,9 @@
 # Expo Media Preview
 
-A lightweight and customizable media (image/video/GIF) viewer that allows tapping on a thumbnail to open a full-screen preview with **pinch to zoom**, **drag to dismiss**, and **cool animations**.
+A lightweight media viewer that allows full-screen (image/video/GIF).
+
+You can pinch zoom-in/out, double-tap zoom-in/out, move and swipe-to-dismiss.
+
 
 > Note: This library is only compatible with <strong>Expo 52 and above
 
@@ -10,11 +13,10 @@ A lightweight and customizable media (image/video/GIF) viewer that allows tappin
 
 ## Features
 
-- Single Tap to open an image or video full-screen.  
-- Pinch to Zoom and **Drag to Pan** with smooth animations.  
-- Drag to Dismiss gesture when zoomed out.  
+- Single Tap to open an media full-screen.  
+- Pinch to Zoom.  
+- Drag to Dismiss.  
 - Supports Images, GIFs, and Videos out of the box.  
-- Highly Customizable – adjust styling and animation durations.
 
 
 ## Installation
@@ -40,6 +42,12 @@ yarn add expo-media-preview
 expo install expo-image expo-video expo-blur
 
 ```
+
+## Demo
+
+![open and close image modal](assets/ios.mp4)
+
+
 
 ## Quick Start
 
@@ -111,11 +119,12 @@ export default function App() {
 > If you do *not* provide a `videoPlaceholderSrc`, the video will be rendered directly (initially without controls, muted, and paused). This default behavior is often not the desired user experience.
 >
 
-### Happy Building!
-
->
-> Feel free to open an issue or submit PRs to help improve this package. If you find this helpful, don’t forget to give it a ⭐ on GitHub!
->
 
 Made with ❤️ and Expo
+
+>
+> Credits: Inspired from react-native-image-modal
+>
+
+
 
