@@ -1,6 +1,9 @@
 # Expo Media Preview
 
-A lightweight and customizable media (image/video/GIF) viewer that allows tapping on a thumbnail to open a full-screen preview with **pinch to zoom**, **drag to dismiss**, and **cool animations**.
+A lightweight media (image/video/GIF) viewer that allows full-screen.
+
+You can pinch zoom-in/out, double-tap zoom-in/out, move and swipe-to-dismiss.
+
 
 > Note: This library is only compatible with <strong>Expo 52 and above
 
