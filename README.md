@@ -1,6 +1,6 @@
 # Expo Media Preview
 
-A lightweight media (image/video/GIF) viewer that allows full-screen.
+A lightweight media viewer that allows full-screen (image/video/GIF).
 
 You can pinch zoom-in/out, double-tap zoom-in/out, move and swipe-to-dismiss.
 
