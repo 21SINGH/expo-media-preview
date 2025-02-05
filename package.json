@@ -22,5 +22,19 @@
   },
   "dependencies": {
     "expo-image": "^2.0.4"
-  }
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "media-preview",
+    "image-preview",
+    "video-preview",
+    "full-modal",
+    "full-screen-preview"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/21SINGH/expo-media-preview.git"
+  },
+  "homepage": "https://github.com/21SINGH/expo-media-preview/blob/main/README.md"
 }
