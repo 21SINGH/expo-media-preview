@@ -114,21 +114,20 @@ export default function App() {
 | `videoPlaceholder` | `ImageSourcePropType` | Image source for video placeholder |
 | `isVideo` | `boolean` | Determines if the source is a video default false |
 | `style` | `StyleProp` | Style for the original Media |
-| `isRTL` | `boolean` | Support for right-to-left layout default false |
 | `swipeToDismiss` | `boolean` | Enable swipe to dismiss functionality |
-| `modalRef` | `RefObject<ImageDetail>` | Deprecated ref for image modal |
+| `modalRef` | `RefObject<>` | Deprecated ref for image modal |
 | `disabled` | `boolean` | Disable opening image modal |
 | `parentLayout` | `{ x: number, y: number, width: number, height: number }` | Parent component layout for modal |
 | `animationDuration` | `number` | Duration of animation default 150 |
-| `onTap` | `(eventParams: OnTap) => void` | Callback when image is tapped |
-| `onDoubleTap` | `() => void` | Callback when image is double tapped |
-| `onLongPress` | `() => void` | Callback when image is long pressed |
-| `onOpen` | `() => void` | Callback when image modal is opening |
-| `didOpen` | `() => void` | Callback when image modal is opened |
-| `onMove` | `(position: OnMove) => void` | Callback when modal image is moving |
+| `onTap` | `(eventParams: OnTap) => void` | Callback when media is tapped |
+| `onDoubleTap` | `() => void` | Callback when media is double tapped |
+| `onLongPress` | `() => void` | Callback when media is long pressed |
+| `onOpen` | `() => void` | Callback when media modal is opening |
+| `didOpen` | `() => void` | Callback when media modal is opened |
+| `onMove` | `(position: OnMove) => void` | Callback when modal media is moving |
 | `responderRelease` | `(vx: number, scale: number) => void` | Callback when touch is released |
-| `willClose` | `() => void` | Callback when image modal is closing |
-| `onClose` | `() => void` | Callback when image modal is closed |
+| `willClose` | `() => void` | Callback when media modal is closing |
+| `onClose` | `() => void` | Callback when media modal is closed |
 
 >
 > *   **Video Placeholder (Highly Recommended):** Always include `videoPlaceholderSrc` for videos.  This uses `expo-image` for better quality and caching. Without it, videos render initially muted, paused, and without controls.
