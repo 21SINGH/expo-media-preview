@@ -1,6 +1,8 @@
+import React from 'react'
 import type { ReactNode } from 'react'
 
-import { Animated, Image, TouchableOpacity } from 'react-native'
+import { Animated, TouchableOpacity } from 'react-native'
+import { Image } from 'expo-image'
 
 import type { RenderImageComponentParams } from '../../types'
 import type { ImageResizeMode, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native'
@@ -22,7 +24,6 @@ const OriginImage = ({
   source,
   resizeMode,
   imageOpacity,
-  renderToHardwareTextureAndroid,
   disabled,
   style,
   isModalOpen,
@@ -39,7 +40,6 @@ const OriginImage = ({
 
   return (
     <Animated.View
-      renderToHardwareTextureAndroid={renderToHardwareTextureAndroid}
       style={[{ opacity: imageOpacity }]}
     >
       <TouchableOpacity
@@ -56,7 +56,11 @@ const OriginImage = ({
             isModalOpen,
           })
         ) : (
-          <Image source={source} style={style} resizeMode={resizeMode} />
+          <Image
+          source={source }
+          style={style}
+          contentFit="cover"
+        />
         )}
       </TouchableOpacity>
     </Animated.View>

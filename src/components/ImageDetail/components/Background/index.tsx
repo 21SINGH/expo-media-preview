@@ -1,5 +1,6 @@
+import React from 'react'
 import { Animated, StyleSheet } from 'react-native'
-
+import { BlurView } from "expo-blur";
 import type { ColorValue } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -14,20 +15,21 @@ const styles = StyleSheet.create({
 
 interface Props {
   readonly animatedOpacity: Animated.Value
-  readonly backgroundColor: ColorValue
-  readonly renderToHardwareTextureAndroid: boolean
 }
 
 const Background = ({
   animatedOpacity,
-  backgroundColor,
-  renderToHardwareTextureAndroid,
+  
 }: Props) => {
   return (
-    <Animated.View
-      renderToHardwareTextureAndroid={renderToHardwareTextureAndroid}
-      style={[styles.background, { backgroundColor }, { opacity: animatedOpacity }]}
-    />
+    <Animated.View style={[styles.background, { opacity: animatedOpacity }]}>
+      <BlurView
+        style={{ flex: 1 }}
+        intensity={100}
+        tint="systemChromeMaterialDark"
+        experimentalBlurMethod="dimezisBlurView"
+      />
+    </Animated.View>
   )
 }
 

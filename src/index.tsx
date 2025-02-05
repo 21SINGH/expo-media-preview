@@ -1,3 +1,4 @@
+import React from 'react'
 import type { ReactNode, RefObject } from 'react'
 import { createRef, forwardRef, useImperativeHandle, useRef, useState } from 'react'
 
@@ -197,7 +198,6 @@ const ImageModal = forwardRef<ReactNativeImageModal, Props>(function ImageModal(
     style,
     resizeMode = 'contain',
     isRTL = false,
-    renderToHardwareTextureAndroid = true,
     isTranslucent,
     swipeToDismiss = true,
     imageBackgroundColor = 'transparent',
@@ -279,7 +279,6 @@ const ImageModal = forwardRef<ReactNativeImageModal, Props>(function ImageModal(
         source={source}
         resizeMode={resizeMode}
         imageOpacity={originImageOpacity}
-        renderToHardwareTextureAndroid={renderToHardwareTextureAndroid}
         disabled={disabled}
         style={style}
         isModalOpen={isModalOpen}
@@ -294,7 +293,6 @@ const ImageModal = forwardRef<ReactNativeImageModal, Props>(function ImageModal(
           imageStyle={modalImageStyle}
           ref={modalRef ?? imageDetailRef}
           isOpen={isModalOpen}
-          renderToHardwareTextureAndroid={renderToHardwareTextureAndroid}
           isTranslucent={isTranslucent}
           origin={originImageLayout}
           backgroundColor={overlayBackgroundColor}
