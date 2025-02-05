@@ -1,6 +1,6 @@
 {
   "name": "expo-media-preview",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "A package for Expo apps that lets users view images, videos, and GIFs in full-screen with pinch-to-zoom, drag-to-dismiss gestures, and smooth animations.",
   "main": "src/index.tsx",
   "scripts": {
