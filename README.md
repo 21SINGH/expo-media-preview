@@ -45,7 +45,7 @@ expo install expo-image expo-video expo-blur
 
 ## Demo
 
-![open and close image modal](assets/ios.mp4)
+![open and close image modal](demo/preview.gif)
 
 
 
