@@ -101,19 +101,16 @@ export default function App() {
 
 | Prop | Type | Description |
 |---|---|---|
-| `source` | `ImageSourcePropType` | Image source for the modal |
+| `source` | `Undefined` | Media source |
 | `videoPlaceholder` | `ImageSourcePropType` | Image source for video placeholder |
-| `isVideo` | `boolean` | Determines if the source is a video |
-| `style` | `StyleProp<ImageStyle>` | Style for the original image |
-| `isRTL` | `boolean` | Support for right-to-left layout |
-| `renderToHardwareTextureAndroid` | `boolean` | Use hardware texture for animation (Android) |
+| `isVideo` | `boolean` | Determines if the source is a video default false |
+| `style` | `StyleProp` | Style for the original Media |
+| `isRTL` | `boolean` | Support for right-to-left layout default false |
 | `swipeToDismiss` | `boolean` | Enable swipe to dismiss functionality |
-| `imageBackgroundColor` | `string` | Background color for original image |
 | `modalRef` | `RefObject<ImageDetail>` | Deprecated ref for image modal |
 | `disabled` | `boolean` | Disable opening image modal |
-| `modalImageStyle` | `ImageStyle` | Style for modal image |
 | `parentLayout` | `{ x: number, y: number, width: number, height: number }` | Parent component layout for modal |
-| `animationDuration` | `number` | Duration of animation |
+| `animationDuration` | `number` | Duration of animation default 150 |
 | `onTap` | `(eventParams: OnTap) => void` | Callback when image is tapped |
 | `onDoubleTap` | `() => void` | Callback when image is double tapped |
 | `onLongPress` | `() => void` | Callback when image is long pressed |
@@ -123,6 +120,7 @@ export default function App() {
 | `responderRelease` | `(vx: number, scale: number) => void` | Callback when touch is released |
 | `willClose` | `() => void` | Callback when image modal is closing |
 | `onClose` | `() => void` | Callback when image modal is closed |
+
 ### ExpoMediaPreview Usage Notes
 >
 > *   **`imgSrc` or `videoSrc` Required (Not Both):** Provide *either* `imgSrc` *or* `videoSrc`, but *never both*.  Using both will cause issues.
