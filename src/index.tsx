@@ -24,11 +24,9 @@ interface ReactNativeImageModal {
  * @typedef {object} Props
  *  * @property {ImageSourcePropType} videoPlaceholder - Image source.
  * @property {StyleProp<ImageStyle>} [style] - Style for original image.
- * @property {boolean} [isRTL=false] - Support for right-to-left layout.
  * @property {boolean} [renderToHardwareTextureAndroid=true] - (Android only) Use hardware texture for animation.
  * @property {boolean} [swipeToDismiss=true] - Dismiss image modal by swiping up or down.
  * @property {boolean} [imageBackgroundColor=transparent] - Background color for original image.
- * @property {boolean} modalRef - Deprecated: Ref for image modal. Use ref instead.
  * @property {boolean} [disabled=false] - Disable opening image modal.
  * @property {boolean} [modalImageStyle] - Style for modal image.
  * @property {boolean} [parentLayout] - Parent component layout of ImageModal to limit displayed image modal area when closing image modal.
@@ -61,11 +59,6 @@ interface Props {
    */
   readonly style?: StyleProp<ImageStyle>
   /**
-   *  Support for right-to-left layout.
-   *  @default false
-   */
-  readonly isRTL?: boolean
-  /**
    *  (Android only) Use hardware texture for animation.
    *  @default true
    */
@@ -80,10 +73,6 @@ interface Props {
    *  @default 'transparent'
    */
   readonly imageBackgroundColor?: string
-  /**
-   * @deprecated This prop is deprecated and will be removed in future releases. Use `ref` instead.
-   */
-  readonly modalRef?: RefObject<ImageDetail>
   /**
    *  Disable opening image modal.
    *  @default false
@@ -156,10 +145,8 @@ const ExpoMediaPreview = forwardRef<ReactNativeImageModal, Props>(function ExpoM
     videoPlaceholder,
     style,
     isVideo = false,
-    isRTL = false,
     swipeToDismiss = true,
     imageBackgroundColor = 'transparent',
-    modalRef,
     disabled = false,
     modalImageStyle,
     parentLayout,
@@ -177,13 +164,12 @@ const ExpoMediaPreview = forwardRef<ReactNativeImageModal, Props>(function ExpoM
   ref,
 ) {
   const imageRef = createRef<View>()
-  const imageDetailRef = modalRef ?? createRef<ImageDetail>()
+  const imageDetailRef =  createRef<ImageDetail>()
   // If don't use useRef, animation will not work
   const originImageOpacity = useRef(new Animated.Value(VISIBLE_OPACITY)).current
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { originImageLayout, updateOriginImageLayout } = useOriginImageLayout({
     imageRef,
-    isRTL,
   })
 
   const showModal = (): void => {
@@ -240,7 +226,7 @@ const ExpoMediaPreview = forwardRef<ReactNativeImageModal, Props>(function ExpoM
           source={source}
           isVideo={isVideo}
           imageStyle={modalImageStyle}
-          ref={modalRef ?? imageDetailRef}
+          ref={ imageDetailRef}
           isOpen={isModalOpen}
           origin={originImageLayout}
           swipeToDismiss={swipeToDismiss}

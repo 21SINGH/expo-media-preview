@@ -7,10 +7,10 @@ import type { View } from 'react-native'
 
 interface Params {
   readonly imageRef: RefObject<View | null>
-  readonly isRTL: boolean
+  readonly isRTL?: boolean
 }
 
-const useOriginImageLayout = ({ imageRef, isRTL }: Params) => {
+const useOriginImageLayout = ({ imageRef, isRTL = false }: Params) => {
   const [originImageLayout, setOriginImageLayout] = useState({
     x: 0,
     y: 0,
