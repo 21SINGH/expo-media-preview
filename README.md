@@ -119,3 +119,9 @@ export default function App() {
 
 Made with ❤️ and Expo
 
+>
+>Credits: Inspired from react-native-image-modal
+>
+
+
+
