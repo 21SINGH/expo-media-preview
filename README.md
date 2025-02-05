@@ -43,6 +43,8 @@ expo install expo-image expo-video expo-blur
 
 ```
 
+## Demo
+
 ## Quick Start
 
 - Install the package (and its peer dependencies).
