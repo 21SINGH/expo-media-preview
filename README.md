@@ -130,16 +130,9 @@ export default function App() {
 | `willClose` | `() => void` | Callback when image modal is closing |
 | `onClose` | `() => void` | Callback when image modal is closed |
 
-### ExpoMediaPreview Usage Notes
 >
-> *   **`imgSrc` or `videoSrc` Required (Not Both):** Provide *either* `imgSrc` *or* `videoSrc`, but *never both*.  Using both will cause issues.
-> *   **Dynamic Styling:** The `style` prop applies to either the Image or Video component, depending on which source (`imgSrc` or `videoSrc`) you provide.
 > *   **Video Placeholder (Highly Recommended):** Always include `videoPlaceholderSrc` for videos.  This uses `expo-image` for better quality and caching. Without it, videos render initially muted, paused, and without controls.
 **Regarding Videos:**
->
-> Providing a `videoPlaceholderSrc` is *strongly recommended* for all video previews.  When you include a `videoPlaceholderSrc`, the placeholder image will be rendered using `expo-image`, which generally offers superior image quality and caching compared to directly rendering a video frame.
->
-> If you do *not* provide a `videoPlaceholderSrc`, the video will be rendered directly (initially without controls, muted, and paused). This default behavior is often not the desired user experience.
 >
 
 
