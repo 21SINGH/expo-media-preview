@@ -56,32 +56,41 @@ expo install expo-image expo-video expo-blur
 
 
 ```javascript
-import React from 'react';
-import { View } from 'react-native';
-import ExpoMediaPreview from 'expo-media-preview';
+import React from "react";
+import { View } from "react-native";
+import ExpoMediaPreview from "expo-media-preview";
 
 export default function App() {
   const sampleImage = {
-    uri: 'https://path-to-your-img-file.jpg', // Replace with your image URL
+    uri: "https://path-to-your-img-file.jpg", // Replace with your image URL
   };
 
   const sampleVideo = {
-    uri: 'https://path-to-your-video-file.mp4', // Replace with your video URL
+    uri: "https://path-to-your-video-file.mp4", // Replace with your video URL
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       {/* Usage with an image */}
       <ExpoMediaPreview
-        imgSrc={sampleImage}
-        style={{ width: 150, height: 150 }}
+        source={sampleImage}
+        style={{
+          height: 150,
+          width: 150,
+        }}
       />
 
       {/* Usage with a video */}
       <ExpoMediaPreview
-        videoSrc={sampleVideo}
-        videoPlaceholderSrc={{ uri: 'https://path-to-your-placeholder-image.jpg' }}
-        style={{ width: 150, height: 150, marginTop: 20 }}
+        source={sampleVideo}
+        videoPlaceholderSrc={{
+          uri: "https://path-to-your-placeholder-image.jpg",
+        }}
+        isVideo={true}
+        style={{
+          height: 150,
+          width: 150,
+        }}
       />
     </View>
   );
