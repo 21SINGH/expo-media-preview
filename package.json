@@ -1,7 +1,7 @@
 {
   "name": "expo-media-preview",
   "version": "2.0.0",
-  "description": "A react native package that offers you full media preview when you tap on it uses expo-image and expo-video under the hood",
+  "description": "A package for Expo apps that lets users view images, videos, and GIFs in full-screen with pinch-to-zoom, drag-to-dismiss gestures, and smooth animations.",
   "main": "src/index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
