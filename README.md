@@ -111,16 +111,11 @@ export default function App() {
 > If you do *not* provide a `videoPlaceholderSrc`, the video will be rendered directly (initially without controls, muted, and paused). This default behavior is often not the desired user experience.
 >
 
-### Happy Building!
-
->
-> Feel free to open an issue or submit PRs to help improve this package. If you find this helpful, don’t forget to give it a ⭐ on GitHub!
->
 
 Made with ❤️ and Expo
 
 >
->Credits: Inspired from react-native-image-modal
+> Credits: Inspired from react-native-image-modal
 >
 
 
