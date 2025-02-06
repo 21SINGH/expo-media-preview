@@ -125,40 +125,23 @@ const MediaArea = ({
   };
 
   const moveMediaToGesture = (gestureState: PanResponderGestureState) => {
-    clearLongPressTimeout();
-    const { dx, dy } = gestureState;
-  
-    // Check if the horizontal swipe distance exceeds the threshold (50px)
-    if (Math.abs(dx) > 100) {
-      // Dismiss the modal if swipe distance exceeds 50px
-      onClose();
-      return; // Don't update the position anymore
-    }
-  
-    // Allow vertical movement only (ignore horizontal movement)
-    const newDistance = getDistanceFromLastPosition(_lastPosition.current, {
-      dx: 0, // Lock horizontal movement
-      dy,
-    });
-  
-    _lastPosition.current = { x: 0, y: dy }; // Update only vertical position
-  
-    const scale = _scale.current;
-    _position.current = getImagePositionFromDistanceInScale(
-      scale,
-      _position.current,
-      newDistance
-    );
-    animatedPosition.setValue(_position.current);
-  
+    clearLongPressTimeout()
+    const { dx, dy } = gestureState
+    const newDistance = getDistanceFromLastPosition(_lastPosition.current, { dx, dy })
+    _lastPosition.current = { x: dx, y: dy }
+
+    const scale = _scale.current
+    _position.current = getImagePositionFromDistanceInScale(scale, _position.current, newDistance)
+    animatedPosition.setValue(_position.current)
+
     const opacity = getOpacityFromSwipe({
       swipeToDismiss,
       scale,
       dy,
       windowHeight,
-    });
-    animatedOpacity.setValue(opacity);
-  };
+    })
+    animatedOpacity.setValue(opacity)
+  }
 
   
   const pinchZoom = (event: GestureResponderEvent) => {
